@@ -9,25 +9,25 @@ class EulerianModel():
 
     def dataInput(self):
         # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/Python Script for Abaqus/data/dataInput.json', 'r') as json_file:
+        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataDefautInput.json', 'r') as json_file:
             data = json.load(json_file)
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
         self.m = mdb.models[self.ModelName]
         # Defining Variables
+        self.KssDomain = "KssDomain"
+        self.ElementType = "EC3D8RT"
+        self.ElementLibrary = "EXPLICIT"
+        self.EulerDomain = "EulerDomain"
+        self.SectionName = "EulerSection"
+        self.WorkpieceDomain = "WorkpieceDomain"
+        self.WorkpieceBottom = "WorkpieceBottom"
         self.PartName = str(data['eulerianData']['createPartInformation']['Name'])
         self.Width = data['eulerianData']['createPartInformation']['Width']
         self.Height = data['eulerianData']['createPartInformation']['Height']
         self.Trickness = data['eulerianData']['createPartInformation']['Trickness']
         self.x_points = data['eulerianData']['createParticionInformation']['x_points']
         self.y_points = data['eulerianData']['createParticionInformation']['y_points']
-        self.EulerDomain = str(data['eulerianData']['createSetsandSectionsInformation']['eulerDomainSet'])
-        self.KssDomain = str(data['eulerianData']['createSetsandSectionsInformation']['kssDomain'])
-        self.WorkpieceDomain = str(data['eulerianData']['createSetsandSectionsInformation']['workpieceDomain'])
-        self.WorkpieceBottom = str(data['eulerianData']['createSetsandSectionsInformation']['workpieceBottom'])
-        self.SectionName = str(data['eulerianData']['createSetsandSectionsInformation']['sectionName'])
-        self.ElementType = str(data['eulerianData']['createMeshInformation']['elemCode'])
-        self.ElementLibrary = str(data['eulerianData']['createMeshInformation']['elemLibrary'])
         self.GlobalSize = data['eulerianData']['createMeshInformation']['globalSize']
         self.DeviationFactor = data['eulerianData']['createMeshInformation']['deviationFactor']
         self.MinSizeFactor = data['eulerianData']['createMeshInformation']['minSizeFactor']

@@ -9,7 +9,7 @@ class ToolModel():
 
     def dataInput(self):
         # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/Python Script for Abaqus/data/dataInput.json', 'r') as json_file:
+        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataDefautInput.json', 'r') as json_file:
             data = json.load(json_file)
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
@@ -22,7 +22,9 @@ class ToolModel():
         self.rakeFaceDimension = data['toolData']['createPartInformation']['rakeFaceDimension']
         self.Radius = data['toolData']['createPartInformation']['Radius']
         self.Trickness = data['toolData']['createPartInformation']['Trickness']
-        self.SectionName = str(data['toolData']['createPartitionInformation']['sectionName'])
+
+        self.SectionName = "ToolSection"
+
         self.sizePartitionRadius = data['toolData']['createPartitionInformation']['partition01']
         self.sizePartitionVerticalEdge = data['toolData']['createPartitionInformation']['partition02']
         self.GlobalSize = data['toolData']['createMeshInformation']['globalSize']

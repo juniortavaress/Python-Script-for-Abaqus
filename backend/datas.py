@@ -12,14 +12,7 @@ dataInput = {
             "Height": 0.01,
             "Trickness": 0.02
         },
-        "createSetsandSectionsInformation": {
-            "referenceSetName": "PlateRP",
-            "domainSetName": "PlateDomain",
-            "sectionName": "ChipPlateSection",
-        },
         "createMeshInformation": {
-            "elemCode": "C3D8R",
-            "elemLibrary": "EXPLICIT",
             "globalSize": 0.01,
             "deviationFactor": 0.1,
             "minSizeFactor": 0.1
@@ -39,7 +32,6 @@ dataInput = {
         "createPartitionInformation": {
             "partition01": 1.5,
             "partition02": 1.14,
-            "sectionName": "ToolSection"
         },
         "createMeshInformation": {
             "globalSize": 0.1,
@@ -63,17 +55,7 @@ dataInput = {
             "x_points": [1.5, 2.7, 3.0, 3.3],
             "y_points": [2.8, 1.3, 1.23, 1.1],
         },
-        "createSetsandSectionsInformation": {
-            "eulerDomainSet": "EulerDomain",
-            "kssDomain": "KssDomain",
-            "workpieceBottom": "WorkpieceBottom",
-            "workpieceDomain": "WorkpieceDomain",
-            "sectionName": "EulerSection"
-        },
-
         "createMeshInformation": {
-            "elemCode": "EC3D8RT",
-            "elemLibrary": "EXPLICIT",
             "globalSize": 0.2,
             "deviationFactor": 0.1,
             "minSizeFactor": 0.1
@@ -99,7 +81,8 @@ dataInput = {
 
 
 # Path to the json file
-file_path = "S:/Junior/Abaqus+Python/Python Script for Abaqus/data/dataInput.json"
+file_path = "S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json"
+file_path = "S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataDefautInput.json"
 
 # Saving the dict to the json file
 with open(file_path, 'w') as json_file:

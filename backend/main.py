@@ -13,6 +13,9 @@ from sketch import *
 from visualization import *
 from connectorBehavior import *
 
+import os
+work_directory = 'S:\Junior\Abaqus+Python\PythonScriptforAbaqus'
+os.chdir(work_directory)
 
 mdb.Model(modelType=STANDARD_EXPLICIT, name='PythonModel')
 
@@ -25,6 +28,6 @@ except:
 files = ['datas', 'materials', 'createChipPlate', 'createTool', 'createEulerian', 'assemblyAndSimulation']
 # files = ['createEulerian']
 for file in files:
-    with open('S:\\Junior\Abaqus+Python\\Python Script for Abaqus\\backend\\' + file + '.py') as m:
+    with open('S:\\Junior\Abaqus+Python\\PythonScriptforAbaqus\\backend\\' + file + '.py') as m:
         exec(m.read())
 

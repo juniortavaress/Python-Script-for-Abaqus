@@ -8,7 +8,7 @@ class ChipPlateModel():
 
     def dataInput(self):
         # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/Python Script for Abaqus/data/dataInput.json', 'r') as json_file:
+        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'r') as json_file:
             data = json.load(json_file)
 
         # Calling Model
@@ -16,18 +16,20 @@ class ChipPlateModel():
         self.m = mdb.models[self.ModelName]
 
         # Defining Variables
-        self.PartName = str(data['chipPlateData']['createPartInformation']['Name'])
+        self.ElementType = "C3D8R"
+        self.ElementLibrary = "EXPLICIT"
+        self.ReferenceSetName = "PlateRP"
+        self.DomainSetName = "PlateDomain"
+        self.SectionName = "ChipPlateSection"
+
         self.Width = data['chipPlateData']['createPartInformation']['Width']
         self.Height = data['chipPlateData']['createPartInformation']['Height']
+        self.PartName = str(data['chipPlateData']['createPartInformation']['Name'])
         self.Trickness = data['chipPlateData']['createPartInformation']['Trickness']
-        self.ReferenceSetName = str(data['chipPlateData']['createSetsandSectionsInformation']['referenceSetName'])
-        self.DomainSetName = str(data['chipPlateData']['createSetsandSectionsInformation']['domainSetName'])
-        self.SectionName = str(data['chipPlateData']['createSetsandSectionsInformation']['sectionName'])
-        self.ElementType = str(data['chipPlateData']['createMeshInformation']['elemCode'])
-        self.ElementLibrary = str(data['chipPlateData']['createMeshInformation']['elemLibrary'])
         self.GlobalSize = data['chipPlateData']['createMeshInformation']['globalSize']
+        self.MinSizeFactor = data['chipPlateData']['createMeshInformation']['minSizeFactor']       
         self.DeviationFactor = data['chipPlateData']['createMeshInformation']['deviationFactor']
-        self.MinSizeFactor = data['chipPlateData']['createMeshInformation']['minSizeFactor']
+
 
     def createPart(self):
         # Creating the Chip Plate

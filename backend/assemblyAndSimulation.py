@@ -1,6 +1,9 @@
+import os
+
 class AssemblyModel():
     def __init__(self):
         # Creating Assembly
+        # self.setWorkDirectory()
         self.dataInput()
         self.assemblyPositions()
         self.stepsAndHistory()
@@ -9,9 +12,15 @@ class AssemblyModel():
         self.setBoundaryConditionsAndPredefinedFields()
         self.submitSimulation()
 
+    # def setWorkDirectory(self):
+    #     # Defina o caminho para o diretório de trabalho
+    #     work_directory = 'S:\Junior\Abaqus+Python\PythonScriptforAbaqus'
+    #     os.chdir(work_directory)
+    #     # print(f"Working directory set to: {work_directory}")
+
     def dataInput(self):
         # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/Python Script for Abaqus/data/dataInput.json', 'r') as json_file:
+        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataDefautInput.json', 'r') as json_file:
             data = json.load(json_file)
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
@@ -98,15 +107,16 @@ class AssemblyModel():
 
     def submitSimulation(self):
         # Creating and submitting the simulation job
-        mdb.Job(activateLoadBalancing=False, atTime=None, contactPrint=OFF, 
+        job = mdb.Job(activateLoadBalancing=False, atTime=None, contactPrint=OFF, 
         description='', echoPrint=OFF, explicitPrecision=SINGLE, historyPrint=OFF, 
         memory=90, memoryUnits=PERCENTAGE, model='PythonModel', modelPrint=OFF, 
         multiprocessingMode=DEFAULT, name='Test', nodalOutputPrecision=SINGLE, 
         numCpus=6, numDomains=6, numThreadsPerMpiProcess=1, queue=None, 
         resultsFormat=ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=
         0, waitMinutes=0)
+        job.writeInput(consistencyChecking=OFF)
         # mdb.jobs['Test'].submit(consistencyChecking=OFF, datacheckJob=True)
-        mdb.jobs['Test'].submit(consistencyChecking=OFF)
+        # mdb.jobs['Test'].submit(consistencyChecking=OFF)
 
 
 # Instantiate the class
