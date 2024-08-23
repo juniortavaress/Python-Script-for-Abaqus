@@ -1,0 +1,14 @@
+{
+    "files": [
+        "mainwindow.py",
+        "form.ui",
+        "callbackButtons.py",
+        "generateAssembly.py",
+        "generateChipPlate.py",
+        "generateEulerian.py",
+        "generateTool.py",
+        "pageLayout.py",
+        "vectors.py",
+        "graphLayout.py"
+    ]
+}

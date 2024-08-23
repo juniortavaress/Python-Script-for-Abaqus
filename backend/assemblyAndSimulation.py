@@ -20,18 +20,19 @@ class AssemblyModel():
 
     def dataInput(self):
         # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataDefautInput.json', 'r') as json_file:
+        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'r') as json_file:
             data = json.load(json_file)
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
         self.m = mdb.models[self.ModelName]
         # Defining Variables
+        
         self.xToolPosition = data['assemblyAndSimulationData']['toolPosition']['xPosition']
         self.yToolPosition = data['assemblyAndSimulationData']['toolPosition']['yPosition']
         self.xChipPlatePosition = self.xToolPosition - data['chipPlateData']['createPartInformation']['Width'] - data['assemblyAndSimulationData']['chipPlatePosition']['distanceFromTool']
         self.yChipPlatePosition = self.yToolPosition + data['assemblyAndSimulationData']['chipPlatePosition']['clearanceOverWorkpiece']
         self.Feed = -data['assemblyAndSimulationData']['toolPosition']['feed']
-        self.StepName = str(data['assemblyAndSimulationData']['stepsAndHistoryInformation']['stepName'])
+        self.StepName = "CuttingStep"
         self.TimePeriod = data['assemblyAndSimulationData']['stepsAndHistoryInformation']['timePeriod']
 
     def assemblyPositions(self):

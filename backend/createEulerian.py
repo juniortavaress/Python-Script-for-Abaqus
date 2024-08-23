@@ -9,7 +9,7 @@ class EulerianModel():
 
     def dataInput(self):
         # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataDefautInput.json', 'r') as json_file:
+        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'r') as json_file:
             data = json.load(json_file)
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])

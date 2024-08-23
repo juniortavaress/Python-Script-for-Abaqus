@@ -14,7 +14,7 @@ from visualization import *
 from connectorBehavior import *
 
 import os
-work_directory = 'S:\Junior\Abaqus+Python\PythonScriptforAbaqus'
+work_directory = 'S:\Junior\Abaqus+Python\PythonScriptforAbaqus\INPFiles'
 os.chdir(work_directory)
 
 mdb.Model(modelType=STANDARD_EXPLICIT, name='PythonModel')
