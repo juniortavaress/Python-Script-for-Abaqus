@@ -8,13 +8,18 @@ class Page_Layout():
         super(Page_Layout, self).__init__()
 
     # Change the page view based on the provided page name
-    def pageNumber(self, page):
+    def pageNumber(self, page, button):
         if page == 0:
-            self.setMinimumSize(380, 400)
+            self.setMinimumSize(420, 400)
             self.ui.pages.setCurrentIndex(0)
-            self.resize(380, 400)
+            self.resize(420, 400)
             Page_Layout.centerWindow(self)
+        elif page == 5:
+            self.setMinimumSize(350, 450)
+            self.ui.pages.setCurrentIndex(5)
+            self.resize(350, 450)
         else:
+            button.setEnabled(False)
             self.setMinimumSize(1500, 850)
             self.showMaximized()
             self.ui.pages.setCurrentIndex(page)
@@ -34,8 +39,7 @@ class Page_Layout():
             3: (all_infos_widgets_assembly, self.ui.assemblyWarning, 'defaut', self.ui.assemblyFinish),
             4: (all_infos_widgets_chip, self.ui.chipWarning, self.ui.chipName, self.ui.chipPlateFinish)}
 
-        page_index = self.ui.pages.currentIndex()
-        all_infos_widgets, warning, non_numerical_label, button = page_mappings[page_index]
+        all_infos_widgets, warning, non_numerical_label, button = page_mappings[page]
 
         # Validate that all required fields are filled with the right info
         for info in all_infos_widgets:
@@ -67,3 +71,52 @@ class Page_Layout():
         qr.moveCenter(cp)
         # Move the top-left corner of the window to align with the adjusted geometry
         self.move(qr.topLeft())
+
+
+    def setDefautInfos(self):
+        Value = True if self.ui.defautValues.isChecked() else False
+        self.ui.toolButton.setChecked(Value)
+        self.ui.chipPlateButton.setEnabled(Value)
+        self.ui.chipPlateButton.setChecked(Value)
+        self.ui.toolButton.setEnabled(Value)
+        self.ui.toolButton.setChecked(Value)
+        self.ui.assemblyButton.setEnabled(Value)
+        self.ui.assemblyButton.setChecked(Value)
+        self.ui.iterateButton.setEnabled(Value)
+
+    def saveInfos(self):
+        self.ui.chipPlateFinish.setEnabled(True)
+        self.ui.eulerianFinish.setEnabled(True)
+        self.ui.toolFinish.setEnabled(True)
+        self.ui.assemblyFinish.setEnabled(True)
+
+    def setIterationVariablesEnabled(self):
+        if self.ui.numberOfVariables.currentIndex() == 1:
+            self.ui.P01.setEnabled(True)
+            self.ui.minP01.setEnabled(True)
+            self.ui.maxP01.setEnabled(True)
+            self.ui.stepP01.setEnabled(True)
+            self.ui.P02.setEnabled(False)
+            self.ui.minP02.setEnabled(False)
+            self.ui.maxP02.setEnabled(False)
+            self.ui.stepP02.setEnabled(False)
+        elif self.ui.numberOfVariables.currentIndex() == 2:
+            self.ui.P01.setEnabled(True)
+            self.ui.minP01.setEnabled(True)
+            self.ui.maxP01.setEnabled(True)
+            self.ui.stepP01.setEnabled(True)
+            self.ui.P02.setEnabled(True)
+            self.ui.minP02.setEnabled(True)
+            self.ui.maxP02.setEnabled(True)
+            self.ui.stepP02.setEnabled(True)
+        else:
+            self.ui.P01.setEnabled(False)
+            self.ui.minP01.setEnabled(False)
+            self.ui.maxP01.setEnabled(False)
+            self.ui.stepP01.setEnabled(False)
+            self.ui.P02.setEnabled(False)
+            self.ui.minP02.setEnabled(False)
+            self.ui.maxP02.setEnabled(False)
+            self.ui.stepP02.setEnabled(False)
+
+

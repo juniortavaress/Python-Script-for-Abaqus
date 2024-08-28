@@ -1,3 +1,4 @@
+from material import *
 m = mdb.models['PythonModel']
 
 def materialsPart():

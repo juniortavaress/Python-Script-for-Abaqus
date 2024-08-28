@@ -29,21 +29,6 @@
             "Height": 5.0
         }
     }, 
-    "assemblyAndSimulationData": {
-        "toolPosition": {
-            "xPosition": 3.0, 
-            "yPosition": 1.3, 
-            "feed": 0.05
-        }, 
-        "stepsAndHistoryInformation": {
-            "timePeriod": 0.03, 
-            "stepName": "CuttingStep"
-        }, 
-        "chipPlatePosition": {
-            "distanceFromTool": 0.2, 
-            "clearanceOverWorkpiece": 0.05
-        }
-    }, 
     "chipPlateData": {
         "createMeshInformation": {
             "globalSize": 0.01, 
@@ -55,6 +40,32 @@
             "Trickness": 0.02, 
             "Name": "ChipPlate", 
             "Height": 0.01
+        }
+    }, 
+    "iterationInformation": {
+        "Feed": {
+            "max": 0, 
+            "step": 0, 
+            "activated": "NO", 
+            "min": 0
+        }, 
+        "rakeAngle": {
+            "max": 0, 
+            "step": 0, 
+            "activated": "NO", 
+            "min": 0
+        }, 
+        "timePeriod": {
+            "max": 0, 
+            "step": 0, 
+            "activated": "NO", 
+            "min": 0
+        }, 
+        "clearanceAngle": {
+            "max": 0, 
+            "step": 0, 
+            "activated": "NO", 
+            "min": 0
         }
     }, 
     "toolData": {
@@ -79,6 +90,21 @@
             "clearanceFaceDimension": 3.35, 
             "rakeFaceDimension": 5.3, 
             "rakeAngle": 12.0
+        }
+    }, 
+    "assemblyAndSimulationData": {
+        "toolPosition": {
+            "xPosition": 3.0, 
+            "yPosition": 1.3, 
+            "feed": 0.05
+        }, 
+        "stepsAndHistoryInformation": {
+            "timePeriod": 0.03, 
+            "stepName": "CuttingStep"
+        }, 
+        "chipPlatePosition": {
+            "distanceFromTool": 0.2, 
+            "clearanceOverWorkpiece": 0.05
         }
     }
 }

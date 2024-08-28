@@ -9,6 +9,8 @@
         "generateTool.py",
         "pageLayout.py",
         "vectors.py",
-        "graphLayout.py"
+        "graphLayout.py",
+        "Icons.qrc",
+        "iterationDatas.py"
     ]
 }

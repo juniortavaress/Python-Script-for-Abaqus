@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>Icons/3d.png</file>
+        <file>Icons/arrow-up (1).png</file>
+        <file>Icons/arrow-up.png</file>
+        <file>Icons/dimensions.png</file>
+        <file>Icons/down (1).png</file>
+        <file>Icons/down.png</file>
+        <file>Icons/downArrowDis.png</file>
+        <file>Icons/process.png</file>
+        <file>Icons/programmer.png</file>
+        <file>Icons/upArrowDis.png</file>
+    </qresource>
+</RCC>

@@ -24,8 +24,8 @@ class Graph_Layout():
         ax.axis(False)
         ax = fig.add_subplot(111, projection='3d')
         ax.set_axis_off()
-        fig.set_facecolor((237/255, 237/255, 237/255))
-        ax.set_facecolor((237/255, 237/255, 237/255))
+        fig.set_facecolor((182/255, 182/255, 182/255))
+        ax.set_facecolor((182/255, 182/255, 182/255))
         canvas = FigureCanvas(fig)
         canvas.setGeometry(plot_area.contentsRect())
         canvas.setParent(plot_area)
@@ -60,7 +60,7 @@ class Graph_Layout():
 
         elif geometry == "Eulerian":
             xlim = [-(float(self.ui.eulerianHeight.text())-float(self.ui.eulerianWidth.text()))/2, float(self.ui.eulerianWidth.text()) + (float(self.ui.eulerianHeight.text())-float(self.ui.eulerianWidth.text()))/2]
-            ylim = [0, 0.1*float(self.ui.eulerianHeight.text())]
+            ylim = [0, float(self.ui.eulerianHeight.text())]
             zlim = [0, float(self.ui.eulerianHeight.text())]
             elev, azim, boxAspect = [0, -90, [1, 1, 1]]
             axis, fig, canvas = [self.axEulerian, self.figEulerian, self.canvasEulerian]

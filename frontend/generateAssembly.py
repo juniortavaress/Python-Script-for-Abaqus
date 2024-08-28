@@ -30,7 +30,10 @@ class Assembly():
     # Update the UI elements based on the checkbox state
     def setDefautInfos(self):
         for key, value in self.assembly_elements.items():
-            key.setText(value if self.ui.assemblyDefaut.isChecked() else "")
+            key.setText(value if self.ui.defautValues.isChecked() else "")
+
+        if self.ui.defautValues.isChecked():
+            Assembly.setInfo(self)
 
 
     # Get info from GUI and if all required information is provided, generate the 3D graph, otherwise clear the previous plot
@@ -59,7 +62,7 @@ class Assembly():
         # Create Eulerian
         eulerian_faces = Vectors.eulerianDatas(self)
         Eulerian.createPartitionEulerian(self, self.axAssembly)
-        self.axAssembly.add_collection3d(Poly3DCollection(eulerian_faces, facecolors='lightblue', linewidths=0.8, edgecolors='black', alpha=0.2))
+        self.axAssembly.add_collection3d(Poly3DCollection(eulerian_faces, facecolors='#48bca6', linewidths=0.8, edgecolors='black', alpha=0.2))
 
         # Create Tool
         self.ui.xTool.setText(str(x))

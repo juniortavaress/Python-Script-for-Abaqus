@@ -1,5 +1,8 @@
 class EulerianModel():
     def __init__(self):
+        EulerianModel.teste(self)
+
+    def teste(self):
         # Create the chip plate model 
         self.dataInput()
         self.createPart()

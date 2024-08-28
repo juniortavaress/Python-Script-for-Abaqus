@@ -1,11 +1,15 @@
 class ToolModel():
     def __init__(self):
+        ToolModel.teste(self)
+
+    def teste(self):
         # Create the chip plate model 
         self.dataInput()
         self.createPart()
         self.createPartition()
         self.createSetsandSections()
         self.createMesh()
+
 
     def dataInput(self):
         # Load data from JSON

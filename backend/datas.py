@@ -1,5 +1,7 @@
 import json
 
+
+
 dataInput = {
     "generalInformation": {
         "modelName": "PythonModel",
@@ -75,6 +77,32 @@ dataInput = {
         "stepsAndHistoryInformation":{
             "stepName": "CuttingStep",
             "timePeriod": 0.03
+        }
+    },
+    "iterationInformation": {
+        "Feed": {
+            "activated": "NO",
+            "min": 0,
+            "max": 0,
+            "step": 0
+        },
+        "rakeAngle":{
+            "activated": "NO",
+            "min": 0,
+            "max": 0,
+            "step": 0
+        },
+        "clearanceAngle":{
+            "activated": "NO",
+            "min": 0,
+            "max": 0,
+            "step": 0
+        },
+        "timePeriod":{
+            "activated": "NO",
+            "min": 0,
+            "max": 0,
+            "step": 0
         }
     }
 }

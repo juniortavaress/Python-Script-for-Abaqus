@@ -38,7 +38,10 @@ class Tool():
     # Update the UI elements based on the checkbox state
     def setDefautInfos(self):
         for key, value in self.tool_elements.items():
-            key.setText(value if self.ui.toolDefaut.isChecked() else "")
+            key.setText(value if self.ui.defautValues.isChecked() else "")
+
+        if self.ui.defautValues.isChecked():
+            Tool.setInfo(self)
 
 
     # Get info from GUI and if all required information is provided, generate the 3D graph, otherwise clear the previous plot
@@ -58,7 +61,7 @@ class Tool():
     def plot3dGraph(self):
         # Set up 3D plot
         tool_faces = Vectors.toolDatas(self, "Tool")
-        self.axTool.add_collection3d(Poly3DCollection(tool_faces, facecolors='lightblue', linewidths=1, edgecolors='grey', alpha=0.8))
+        self.axTool.add_collection3d(Poly3DCollection(tool_faces, facecolors='#48bca6', linewidths=1, edgecolors='white', alpha=0.8))
         # Set up plot layout
         Graph_Layout.axisLayout(self, "Tool")
         Graph_Layout.resize(self)

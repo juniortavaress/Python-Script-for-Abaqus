@@ -41,8 +41,10 @@ class Eulerian():
     # Update the UI elements based on the checkbox state
     def setDefautInfos(self):
         for key, value in self.eulerian_elements.items():
-                 key.setText(value if self.ui.eulerianDefaut.isChecked() else "")
+                 key.setText(value if self.ui.defautValues.isChecked() else "")
 
+        if self.ui.defautValues.isChecked():
+            Eulerian.setInfo(self)
 
     # Get info from GUI and if all required information is provided, generate the 3D graph, otherwise clear the previous plot
     def setInfo(self):
@@ -62,7 +64,7 @@ class Eulerian():
         # Set up 3D plot
         eulerian_faces = Vectors.eulerianDatas(self)
         Eulerian.createPartitionEulerian(self, self.axEulerian)
-        self.axEulerian.add_collection3d(Poly3DCollection(eulerian_faces, facecolors='lightblue', linewidths=1, edgecolors='grey', alpha=0.5))
+        self.axEulerian.add_collection3d(Poly3DCollection(eulerian_faces, facecolors='#48bca6', linewidths=1, edgecolors='white', alpha=0.2))
         # Set up plot layout
         Graph_Layout.axisLayout(self, "Eulerian")
         Graph_Layout.resize(self)
@@ -77,17 +79,17 @@ class Eulerian():
 
         # Plot vertical partitions
         for x_val in x_values:
-            axis.plot([x_val, x_val], [0, 0], [0, float(self.ui.eulerianHeight.text())], 'b-')
-            axis.plot([x_val, x_val], [float(self.ui.eulerianTrickness.text()), float(self.ui.eulerianTrickness.text())], [0, float(self.ui.eulerianHeight.text())], 'b-')
-            axis.plot([x_val, x_val], [0, float(self.ui.eulerianTrickness.text())], [0, 0], 'b-')
-            axis.plot([x_val, x_val], [0, float(self.ui.eulerianTrickness.text())], [float(self.ui.eulerianHeight.text()), float(self.ui.eulerianHeight.text())], 'b-')
+            axis.plot([x_val, x_val], [0, 0], [0, float(self.ui.eulerianHeight.text())], 'w-')
+            axis.plot([x_val, x_val], [float(self.ui.eulerianTrickness.text()), float(self.ui.eulerianTrickness.text())], [0, float(self.ui.eulerianHeight.text())], 'w-')
+            axis.plot([x_val, x_val], [0, float(self.ui.eulerianTrickness.text())], [0, 0], 'w-')
+            axis.plot([x_val, x_val], [0, float(self.ui.eulerianTrickness.text())], [float(self.ui.eulerianHeight.text()), float(self.ui.eulerianHeight.text())], 'w-')
 
         # Plot horizontal partitions
         for y_val in y_values:
-            axis.plot([0, 0], [0, float(self.ui.eulerianTrickness.text())], [y_val, y_val], 'b-')
-            axis.plot([float(self.ui.eulerianWidth.text()), float(self.ui.eulerianWidth.text())], [0, float(self.ui.eulerianTrickness.text())], [y_val, y_val], 'b-')
-            axis.plot([0, float(self.ui.eulerianWidth.text())], [0, 0], [y_val, y_val], 'b-')
-            axis.plot([0, float(self.ui.eulerianWidth.text())], [float(self.ui.eulerianTrickness.text()), float(self.ui.eulerianTrickness.text())], [y_val, y_val], 'b-')
+            axis.plot([0, 0], [0, float(self.ui.eulerianTrickness.text())], [y_val, y_val], 'w-')
+            axis.plot([float(self.ui.eulerianWidth.text()), float(self.ui.eulerianWidth.text())], [0, float(self.ui.eulerianTrickness.text())], [y_val, y_val], 'w-')
+            axis.plot([0, float(self.ui.eulerianWidth.text())], [0, 0], [y_val, y_val], 'w-')
+            axis.plot([0, float(self.ui.eulerianWidth.text())], [float(self.ui.eulerianTrickness.text()), float(self.ui.eulerianTrickness.text())], [y_val, y_val], 'w-')
 
 
     # Save the user inputs
