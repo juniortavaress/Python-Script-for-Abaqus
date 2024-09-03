@@ -8,9 +8,11 @@
         "generateEulerian.py",
         "generateTool.py",
         "pageLayout.py",
-        "vectors.py",
+        "facesGenerator.py",
         "graphLayout.py",
         "Icons.qrc",
-        "iterationDatas.py"
+        "iterationDatas.py",
+        "imports.py",
+        "setAndSaveDefautDatas.py"
     ]
 }

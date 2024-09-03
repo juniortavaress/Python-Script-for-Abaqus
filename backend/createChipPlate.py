@@ -1,37 +1,15 @@
-import os
-import json
-from abaqus import *
-from abaqusConstants import *
-import numpy as np
-from part import *
-from material import *
-from section import *
-from assembly import *
-# from step import *
-from interaction import *
-# from load import *
-from mesh import *
-# from optimization import *
-# from job import *
-# from sketch import *
-from visualization import *
-from connectorBehavior import *
-
+# -*- coding: utf-8 -*-
+from imports import *
 
 class ChipPlateModel():
-    def __init__(self):
-        print(5555)
+    def __init__(self, data):
         # Create the chip plate model 
-        self.dataInput()
+        self.dataInput(data)
         self.createPart()
         self.createSetsandSections()
         self.createMesh()
 
-    def dataInput(self):
-        # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'r') as json_file:
-            data = json.load(json_file)
-
+    def dataInput(self, data):
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
         self.m = mdb.models[self.ModelName]
@@ -61,7 +39,12 @@ class ChipPlateModel():
 
     def createSetsandSections(self):
         # Defining the Reference Point
-        self.p.ReferencePoint(point=self.m.parts[self.PartName].InterestingPoint(self.m.parts[self.PartName].edges[1], MIDDLE))
+        ref_point_coords = (0.0, self.Height, self.Trickness / 2.0)
+        ref_point_id = self.p.ReferencePoint(point=ref_point_coords).id
+        
+        # Creating RP Set
+        self.p.Set(name=self.ReferenceSetName, referencePoints=(self.p.referencePoints[ref_point_id], ))
+
         # Creating RP Set
         self.p.Set(name=self.ReferenceSetName, referencePoints=(self.p.referencePoints[2], ))
         # Creating Domain Set - Without RF
@@ -82,5 +65,5 @@ class ChipPlateModel():
         self.p.generateMesh()
 
 # Instantiate the class
-model = ChipPlateModel()
+# model = ChipPlateModel()
 

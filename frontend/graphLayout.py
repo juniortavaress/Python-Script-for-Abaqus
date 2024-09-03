@@ -1,14 +1,8 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from PySide6.QtGui import QScreen
-from PySide6.QtCore import QTimer
-from PySide6.QtWidgets import QApplication, QMainWindow
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from imports import *
 
 class Graph_Layout():
     def __init__(self):
         super(Graph_Layout, self).__init__()
-
 
     # Create the plot areas for different pages and set up the canvases.
     def createPlotAreas(self):

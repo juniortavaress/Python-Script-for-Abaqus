@@ -1,19 +1,15 @@
-class EulerianModel():
-    def __init__(self):
-        EulerianModel.teste(self)
+# -*- coding: utf-8 -*-
+from imports import *
 
-    def teste(self):
-        # Create the chip plate model 
-        self.dataInput()
+class EulerianModel():
+    def __init__(self, data):
+        self.dataInput(data)
         self.createPart()
         self.createPartition()
         self.createSetsandSections()
         self.createMesh()
 
-    def dataInput(self):
-        # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'r') as json_file:
-            data = json.load(json_file)
+    def dataInput(self, data):
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
         self.m = mdb.models[self.ModelName]
@@ -132,7 +128,6 @@ class EulerianModel():
         self.p.setElementType(elemTypes=(ElemType(elemCode=EC3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, hourglassControl=DEFAULT), ElemType(elemCode=UNKNOWN_WEDGE, elemLibrary=EXPLICIT), ElemType(elemCode=UNKNOWN_TET, elemLibrary=EXPLICIT)), regions=(self.p.cells.getSequenceFromMask(('[#1ffffff ]', ), ), ))
         # Seed the part with a global element size
         self.p.seedPart(deviationFactor=self.DeviationFactor, minSizeFactor=self.MinSizeFactor, size=self.GlobalSize)
-        print(self.GlobalSize)
         # Seed edges with a bias toward one end (end1Edges) using a single bias method
         self.p.seedEdgeByBias(biasMethod=SINGLE, constraint=FINER, end1Edges=self.p.edges.getSequenceFromMask(('[#0:3 #2082082 #200000 ]', ), ), end2Edges=self.p.edges.getSequenceFromMask(('[#0:3 #208208 #8800000 ]', ), ), maxSize=0.2, minSize=0.06)
         self.p.seedEdgeByBias(biasMethod=SINGLE, constraint=FINER, end1Edges=self.p.edges.getSequenceFromMask(('[#0:2 #21084800 #0 #1000 ]', ), ), end2Edges=self.p.edges.getSequenceFromMask(('[#0:2 #10842000 #0 #110000 ]', ), ), maxSize=0.06, minSize=0.006)
@@ -146,5 +141,3 @@ class EulerianModel():
         # Generate the mesh for the part
         self.p.generateMesh()
 
-# Instantiate the class
-model = EulerianModel()

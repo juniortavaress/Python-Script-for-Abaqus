@@ -1,7 +1,5 @@
 import json
 
-
-
 dataInput = {
     "generalInformation": {
         "modelName": "PythonModel",

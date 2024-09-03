@@ -1,20 +1,16 @@
-class ToolModel():
-    def __init__(self):
-        ToolModel.teste(self)
+# -*- coding: utf-8 -*-
+from imports import *
 
-    def teste(self):
-        # Create the chip plate model 
-        self.dataInput()
+class ToolModel():
+    def __init__(self, data):
+        self.dataInput(data)
         self.createPart()
         self.createPartition()
         self.createSetsandSections()
         self.createMesh()
 
 
-    def dataInput(self):
-        # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'r') as json_file:
-            data = json.load(json_file)
+    def dataInput(self, data):
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
         self.m = mdb.models[self.ModelName]
@@ -163,7 +159,3 @@ class ToolModel():
         self.p.seedEdgeByBias(biasMethod=SINGLE, constraint=FINER, end1Edges=self.p.edges.getSequenceFromMask(('[#10500000 #40201 ]', ), ), end2Edges=self.p.edges.getSequenceFromMask(('[#81040080 #20002 ]', ), ), maxSize=self.BiasMaxSize, minSize=self.BiasMinSize)
         self.p.seedEdgeBySize(constraint=FINER, deviationFactor=0.1, edges=self.p.edges.getSequenceFromMask(('[#6c000100 #80e4 ]', ), ), minSizeFactor=0.1, size=self.RadiusMesh)
         self.p.generateMesh()
-
-# Instantiate the class
-model = ToolModel()
-

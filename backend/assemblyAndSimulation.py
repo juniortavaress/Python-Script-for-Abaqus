@@ -1,32 +1,22 @@
-import os
+# -*- coding: utf-8 -*-
+from imports import *
 
 class AssemblyModel():
-    def __init__(self):
+    def __init__(self, data, path_INP, path_CAE, filename):
         # Creating Assembly
-        # self.setWorkDirectory()
-        self.dataInput()
+        self.dataInput(data)
         self.assemblyPositions()
         self.stepsAndHistory()
         self.setInteractions()
         self.setContactAndConstraints()
         self.setBoundaryConditionsAndPredefinedFields()
-        self.submitSimulation()
+        self.submitSimulation(path_INP, path_CAE, filename)
 
-    # def setWorkDirectory(self):
-    #     # Defina o caminho para o diretório de trabalho
-    #     work_directory = 'S:\Junior\Abaqus+Python\PythonScriptforAbaqus'
-    #     os.chdir(work_directory)
-    #     # print(f"Working directory set to: {work_directory}")
-
-    def dataInput(self):
-        # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'r') as json_file:
-            data = json.load(json_file)
+    def dataInput(self, data):
         # Calling Model
         self.ModelName = str(data['generalInformation']['modelName'])
         self.m = mdb.models[self.ModelName]
         # Defining Variables
-        
         self.xToolPosition = data['assemblyAndSimulationData']['toolPosition']['xPosition']
         self.yToolPosition = data['assemblyAndSimulationData']['toolPosition']['yPosition']
         self.xChipPlatePosition = self.xToolPosition - data['chipPlateData']['createPartInformation']['Width'] - data['assemblyAndSimulationData']['chipPlatePosition']['distanceFromTool']
@@ -54,6 +44,7 @@ class AssemblyModel():
             self.m.rootAssembly.instances['Tool-1'].cells.getSequenceFromMask(mask=('[#7f ]', ), ), name='AssembleSet')
     
     def stepsAndHistory(self):
+        print('123')
         # Creating a new step for the simulation
         self.m.TempDisplacementDynamicsStep(improvedDtMethod=ON, name=self.StepName, previous='Initial', timePeriod=self.TimePeriod)
         # Defining field outputs for the new step
@@ -106,21 +97,19 @@ class AssemblyModel():
         self.m.Temperature(createStepName='Initial', crossSectionDistribution=CONSTANT_THROUGH_THICKNESS, distributionType=UNIFORM, magnitudes=(29.0, ), name='InitialTemperature', region=self.m.rootAssembly.sets['AssembleSet'])
         self.m.MaterialAssignment(assignmentList=((self.m.rootAssembly.instances['Eulerian-1'].sets['EulerDomain'], (0, )), (self.m.rootAssembly.instances['Eulerian-1'].sets['WorkpieceDomain'], (1, ))), instanceList=(self.m.rootAssembly.instances['Eulerian-1'], ), name='MaterialAssignment', useFields=False)
 
-    def submitSimulation(self):
+    def submitSimulation(self, path_INP, path_CAE, filename):
         # Creating and submitting the simulation job
         job = mdb.Job(activateLoadBalancing=False, atTime=None, contactPrint=OFF, 
         description='', echoPrint=OFF, explicitPrecision=SINGLE, historyPrint=OFF, 
-        memory=90, memoryUnits=PERCENTAGE, model='PythonModel', modelPrint=OFF, 
-        multiprocessingMode=DEFAULT, name='Test', nodalOutputPrecision=SINGLE, 
+        memory=90, memoryUnits=PERCENTAGE, model=self.ModelName, modelPrint=OFF, 
+        multiprocessingMode=DEFAULT, name=filename, nodalOutputPrecision=SINGLE, 
         numCpus=6, numDomains=6, numThreadsPerMpiProcess=1, queue=None, 
         resultsFormat=ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=
         0, waitMinutes=0)
+        
+        # mdb.jobs[filename].submit(consistencyChecking=OFF, datacheckJob=True)
+        os.chdir(path_INP)
         job.writeInput(consistencyChecking=OFF)
-        # mdb.jobs['Test'].submit(consistencyChecking=OFF, datacheckJob=True)
+
+
         # mdb.jobs['Test'].submit(consistencyChecking=OFF)
-
-
-# Instantiate the class
-model = AssemblyModel()
-
-

@@ -1,50 +1,11 @@
-import json
-import matplotlib.pyplot as plt
-
-from vectors import Vectors
-from PySide6.QtCore import QTimer
+from imports import *
 from pageLayout import Page_Layout
 from graphLayout import Graph_Layout
-from PySide6.QtWidgets import QLineEdit
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-
-
 
 class Eulerian():
     def __init__(self):
         super(Eulerian, self).__init__()
 
-    # Load data from JSON and store UI elements and corresponding values in a dictionary
-    def init(self):
-        # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataDefautInput.json', 'r') as json_file:
-            data = json.load(json_file)
-
-        self.eulerian_elements = {self.ui.eulerianName: str(data['eulerianData']['createPartInformation']['Name']),
-                             self.ui.eulerianWidth: str(data['eulerianData']['createPartInformation']['Width']),
-                             self.ui.eulerianHeight: str(data['eulerianData']['createPartInformation']['Height']),
-                             self.ui.eulerianTrickness: str(data['eulerianData']['createPartInformation']['Trickness']),
-                             self.ui.eulerianPartitionX1: str(data['eulerianData']['createParticionInformation']['x_points'][0]),
-                             self.ui.eulerianPartitionX2: str(data['eulerianData']['createParticionInformation']['x_points'][1]),
-                             self.ui.eulerianPartitionX3: str(data['eulerianData']['createParticionInformation']['x_points'][2]),
-                             self.ui.eulerianPartitionX4: str(data['eulerianData']['createParticionInformation']['x_points'][3]),
-                             self.ui.eulerianPartitionY1: str(data['eulerianData']['createParticionInformation']['y_points'][0]),
-                             self.ui.eulerianPartitionY2: str(data['eulerianData']['createParticionInformation']['y_points'][1]),
-                             self.ui.eulerianPartitionY3: str(data['eulerianData']['createParticionInformation']['y_points'][2]),
-                             self.ui.eulerianPartitionY4: str(data['eulerianData']['createParticionInformation']['y_points'][3]),
-                             self.ui.eulerianGlobalSize: str(data['eulerianData']['createMeshInformation']['globalSize']),
-                             self.ui.eulerianDeviationFactor: str(data['eulerianData']['createMeshInformation']['deviationFactor']),
-                             self.ui.eulerianMininumFactor: str(data['eulerianData']['createMeshInformation']['minSizeFactor'])}
-
-
-    # Update the UI elements based on the checkbox state
-    def setDefautInfos(self):
-        for key, value in self.eulerian_elements.items():
-                 key.setText(value if self.ui.defautValues.isChecked() else "")
-
-        if self.ui.defautValues.isChecked():
-            Eulerian.setInfo(self)
 
     # Get info from GUI and if all required information is provided, generate the 3D graph, otherwise clear the previous plot
     def setInfo(self):
@@ -62,7 +23,7 @@ class Eulerian():
     # Plot graph
     def plot3dGraph(self):
         # Set up 3D plot
-        eulerian_faces = Vectors.eulerianDatas(self)
+        eulerian_faces = FacesGenerator.eulerianDatas(self)
         Eulerian.createPartitionEulerian(self, self.axEulerian)
         self.axEulerian.add_collection3d(Poly3DCollection(eulerian_faces, facecolors='#48bca6', linewidths=1, edgecolors='white', alpha=0.2))
         # Set up plot layout
@@ -95,7 +56,7 @@ class Eulerian():
     # Save the user inputs
     def saveInfos(self):
         try:
-            with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'r') as json_file:
+            with open(self.path_datas_input, 'r') as json_file:
                 data = json.load(json_file)
         except:
             data = {"generalInformation": {"modelName": "PythonModel"}}
@@ -118,9 +79,13 @@ class Eulerian():
                                     }
                                 }
 
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'w') as file:
+        with open(self.path_datas_input, 'w') as file:
             json.dump(data, file, indent=4)
 
         self.ui.eulerianFinish.setEnabled(False)
         self.ui.chipPlateButton.setEnabled(True)
         self.ui.eulerianButton.setChecked(True)
+
+
+
+

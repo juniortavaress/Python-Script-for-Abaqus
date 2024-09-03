@@ -1,47 +1,10 @@
-import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-from vectors import Vectors
-from PySide6.QtCore import QTimer
+from imports import *
 from pageLayout import Page_Layout
 from graphLayout import Graph_Layout
-from PySide6.QtWidgets import QLineEdit
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-
 
 class Tool():
     def __init__(self):
         super(Tool, self).__init__()
-
-    def init(self):
-        # Load data from JSON
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataDefautInput.json', 'r') as json_file:
-            data = json.load(json_file)
-
-        # Extract information from the loaded JSON data
-        self.tool_elements = {self.ui.toolName: str(data['toolData']['createPartInformation']['Name']),
-                         self.ui.toolTrickness: str(data['toolData']['createPartInformation']['Trickness']),
-                         self.ui.toolClearanceAngle: str(data['toolData']['createPartInformation']['clearanceAngle']),
-                         self.ui.toolRakeAngle: str(data['toolData']['createPartInformation']['rakeAngle']),
-                         self.ui.toolClearanceDimension: str(data['toolData']['createPartInformation']['clearanceFaceDimension']),
-                         self.ui.toolRakeDimension: str(data['toolData']['createPartInformation']['rakeFaceDimension']),
-                         self.ui.toolRadius: str(data['toolData']['createPartInformation']['Radius']),
-                         self.ui.toolPartition01: str(data['toolData']['createPartitionInformation']['partition01']),
-                         self.ui.toolPartition02: str(data['toolData']['createPartitionInformation']['partition02']),
-                         self.ui.toolGlobalSize: str(data['toolData']['createMeshInformation']['globalSize']),
-                         self.ui.toolDeviationFactor: str(data['toolData']['createMeshInformation']['deviationFactor']),
-                         self.ui.toolMinimumFactor: str(data['toolData']['createMeshInformation']['minSizeFactor'])}
-
-
-    # Update the UI elements based on the checkbox state
-    def setDefautInfos(self):
-        for key, value in self.tool_elements.items():
-            key.setText(value if self.ui.defautValues.isChecked() else "")
-
-        if self.ui.defautValues.isChecked():
-            Tool.setInfo(self)
 
 
     # Get info from GUI and if all required information is provided, generate the 3D graph, otherwise clear the previous plot
@@ -60,7 +23,7 @@ class Tool():
     # Plot graph
     def plot3dGraph(self):
         # Set up 3D plot
-        tool_faces = Vectors.toolDatas(self, "Tool")
+        tool_faces = FacesGenerator.toolDatas(self, "Tool")
         self.axTool.add_collection3d(Poly3DCollection(tool_faces, facecolors='#48bca6', linewidths=1, edgecolors='white', alpha=0.8))
         # Set up plot layout
         Graph_Layout.axisLayout(self, "Tool")
@@ -70,8 +33,11 @@ class Tool():
 
     # Save the user inputs
     def saveInfos(self):
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'r') as json_file:
-            data = json.load(json_file)
+        try:
+            with open(self.path_datas_input, 'r') as json_file:
+                data = json.load(json_file)
+        except:
+            data = {"generalInformation": {"modelName": "PythonModel"}}
 
         data["toolData"] = {
                             "createPartInformation": {
@@ -98,7 +64,7 @@ class Tool():
                                 }
                             }
 
-        with open('S:/Junior/Abaqus+Python/PythonScriptforAbaqus/data/dataInput.json', 'w') as file:
+        with open(self.path_datas_input, 'w') as file:
             json.dump(data, file, indent=4)
 
         self.ui.toolFinish.setEnabled(False)
