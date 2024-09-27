@@ -1,0 +1,145 @@
+from AuxFiles.imports import *
+from Simulation.setSimulation import RunSimulation
+from AuxFiles.dictionaries import GetDictionary
+from AuxFiles.generalFunctions import AuxFunctions
+from Simulation.managerThread import WorkerThread
+
+from Layout.graphLayout import GraphLayout
+
+
+class ResultsDatas():
+    def __init__(self):
+        super(ResultsDatas, self).__init__()
+
+
+    def folders_paths(self):
+        # Opens a file dialog for the user to select a folder where results (ODB files) will be saved
+        self.path_to_odb_file = QFileDialog.getExistingDirectory(self)
+        ResultsDatas.layout_manager_for_results_data_file(self, '1')
+
+        # Saves the selected folder path to a JSON file
+        data = AuxFunctions.open_dict('dict', self.path_datas_input)
+        data["paths"] = {"path_to_odb_file": self.path_to_odb_file}
+        AuxFunctions.save_dict(self.path_datas_input, data)
+
+        # Initiates the worker thread and loads available ODB files
+        AuxFunctions.thread_manager_for_inp_simulation_and_results(self, 'Results')
+        ResultsDatas.load_odb(self)
+
+
+    def load_odb(self):
+        # Loads available ODB files from the selected folder and populates the UI dropdown
+        self.odb_files_list = [f[:-4] for f in os.listdir(self.path_to_odb_file) if f.endswith('.odb')]
+        self.ui.odbFiles.addItems(self.odb_files_list)
+
+
+    def get_graph(self, task):
+        # Handles the logic for plotting graphs based on selected analysis type and ODB file
+        odb_name = self.ui.odbFiles.currentText()
+        analysis = self.ui.typeOfAnalisys.currentText()
+
+        # Try to clean the plot area
+        AuxFunctions.clean_plot_area(self, self.ax_Result, self.canvas_Result)
+
+        # If a specific ODB file and analysis type are selected, plot the graph for that file
+        if odb_name not in ['None', 'All'] and analysis != 'None':
+            file_name = f'datas{analysis}{odb_name}.pkl'
+            path_file_results = os.path.join(self.path_datas_result, file_name)
+            ResultsDatas.plot_graph(self, path_file_results, odb_name)
+
+        # If 'All' ODB files are selected, plot graphs for all available ODB files
+        elif odb_name == 'All' and analysis != 'None':
+            for index, file in enumerate(self.odb_files_list):
+                file_name = f'datas{analysis}{file}.pkl'
+                path_file_results = os.path.join(self.path_datas_result, file_name)
+                ResultsDatas.plot_graph(self, path_file_results, file, index)
+
+
+    # Plots the graph using the data from the .pkl files and applies the correct labels and colors
+    def plot_graph(self, path, labelname, index = None):
+        datas = AuxFunctions.open_dict('plk', self.path_datas_input)
+        # try:
+            # with open(path, 'rb') as f:
+            #     datas = pickle.load(f)
+        # except FileNotFoundError:
+        #     print(f"File {path} not found. (Results/resultsDatas.py -> get_graph")
+        #     return
+
+        color = GetDictionary.get_colors(self, index)
+
+        if self.ui.typeOfAnalisys.currentText() == 'NT11':
+            times, temperatures = datas[0], datas[1]
+            self.ax_Result.plot(times, temperatures, marker='o', color=color, label=labelname)
+            self.ax_Result.set_xlabel('Time (s)')
+            self.ax_Result.set_ylabel('Temperature (C)')
+            self.ax_Result.set_title('Temperature vs Node Time')
+            self.ax_Result.legend()
+            self.ax_Result.axis(True)
+            self.ax_Result.grid(False)
+            self.fig_Result.tight_layout()
+            self.canvas_Result.draw()
+
+        elif self.ui.typeOfAnalisys.currentText() == 'RF' and self.ui.typeRF.currentText() != 'None':
+            data_rf1, data_rf2, data_rf3 = datas[0], datas[1], datas[2]
+            if self.ui.typeRF.currentText() == 'RF1':                  
+                self.ax_Result.plot(data_rf1[0], data_rf1[1], linestyle='-', color=color, label=f'RF1 - {labelname}', linewidth=1.0)
+                self.ax_Result.set_title('RF1 vs Time')
+
+            elif self.ui.typeRF.currentText() == 'RF2':
+                self.ax_Result.plot(data_rf2[0], data_rf2[1], linestyle='-', color=color, label=f'RF2 - {labelname}', linewidth=1.0)
+                self.ax_Result.set_title('RF2 vs Time')
+
+            elif self.ui.typeRF.currentText() == 'RF3':
+                self.ax_Result.plot(data_rf3[0], data_rf3[1], linestyle='-', color=color, label=f'RF3 - {labelname}', linewidth=1.0)
+                self.ax_Result.set_title('RF3 vs Time')
+            else:
+                if self.ui.odbFiles.currentText() != 'All':
+                    self.ax_Result.plot(data_rf1[0], data_rf1[1], linestyle='-', color='r', label=f'RF1 - {labelname}', linewidth=1.0)
+                    self.ax_Result.plot(data_rf2[0], data_rf2[1], linestyle='-', color='#003366', label=f'RF2 - {labelname}', linewidth=1.0)
+                    self.ax_Result.plot(data_rf3[0], data_rf3[1], linestyle='-', color='#8b5ea7', label=f'RF3 - {labelname}', linewidth=1.0)
+                    self.ax_Result.set_title('Reaction Forces RF1, RF2, and RF3 vs Time')
+
+            self.ax_Result.set_xlabel('Time (s)')
+            self.ax_Result.set_ylabel('Reaction Force (N)')
+            self.ax_Result.legend()
+            self.ax_Result.axis(True)
+            self.ax_Result.grid(False)
+            self.fig_Result.tight_layout()
+            self.canvas_Result.draw()
+
+
+#######################################################################
+
+    # Manages the layout updates based on user selections
+    def layout(self, task):
+        if task == 'odbFiles':
+            print('\nodbFiles')
+            self.ui.typeOfAnalisys.setCurrentIndex(0)
+            self.ui.typeRF.setCurrentIndex(0)
+            self.ui.rfFrame.hide()
+            self.ui.dataFrame.hide()
+
+        elif task == 'typeOfAnalisys':
+            print('\ntypeOfAnalisys')
+            self.ui.typeRF.setCurrentIndex(0)
+            if self.ui.typeOfAnalisys.currentText() == 'NT11':
+                self.ui.dataFrame.show()
+                self.ui.rfFrame.hide()
+            elif self.ui.typeOfAnalisys.currentText() == 'RF':
+                self.ui.rfFrame.show()
+                self.ui.typeRF.currentIndexChanged.disconnect()
+                self.ui.typeRF.clear()
+                self.ui.typeRF.addItems(['None', 'RF1', 'RF2', 'RF3']) if self.ui.odbFiles.currentText() == 'All' else self.ui.typeRF.addItems(['None', 'All', 'RF1', 'RF2', 'RF3'])
+                self.ui.typeRF.currentIndexChanged.connect(lambda: ResultsDatas.layout(self, 'typeRF'))
+                self.ui.typeRF.currentIndexChanged.connect(lambda: ResultsDatas.get_graph(self, 'typeRF'))
+
+        elif task == 'typeRF':
+            print('\ntypeRF')
+            self.ui.dataFrame.hide() if self.ui.typeRF.currentText() == 'All' else self.ui.dataFrame.show()
+
+
+    def layout_manager_for_results_data_file(self, argument):
+        if argument == '1':
+            self.ui.typeOfAnalisys.setEnabled(True)
+            self.ui.pathResultsLabel.setText(self.path_to_odb_file)
+

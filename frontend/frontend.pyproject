@@ -1,18 +1,21 @@
 {
     "files": [
         "mainwindow.py",
-        "form.ui",
-        "callbackButtons.py",
-        "generateAssembly.py",
-        "generateChipPlate.py",
-        "generateEulerian.py",
-        "generateTool.py",
-        "pageLayout.py",
-        "facesGenerator.py",
-        "graphLayout.py",
         "Icons.qrc",
-        "iterationDatas.py",
-        "imports.py",
-        "setAndSaveDefautDatas.py"
+        "Layout/graphLayout.py",
+        "Layout/pageLayout.py",
+        "AuxFiles/callbackButtons.py",
+        "AuxFiles/dictionaries.py",
+        "Geometry/facesGenerator.py",
+        "Geometry/getGeometry.py",
+        "Simulation/iterationDatas.py",
+        "Simulation/managerThread.py",
+        "Simulation/setSimulation.py",
+        "AuxFiles/generalFunctions.py",
+        "AuxFiles/imports.py",
+        "AuxFiles/rasc.py",
+        "Datas/setAndSaveDefautDatas.py",
+        "Form/form.ui",
+        "Results/resultsDatas.py"
     ]
 }

@@ -10,5 +10,12 @@
         <file>Icons/process.png</file>
         <file>Icons/programmer.png</file>
         <file>Icons/upArrowDis.png</file>
+        <file>Icons/checkmark.png</file>
+        <file>Icons/import.png</file>
+        <file>Icons/img01.png</file>
+        <file>Icons/img02.png</file>
+        <file>Icons/Screenshot 2024-09-26 111218.png</file>
+        <file>Icons/Screenshot 2024-09-26 111633.png</file>
+        <file>Icons/abaqusIcon.png</file>
     </qresource>
 </RCC>
