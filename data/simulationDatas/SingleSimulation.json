@@ -1,6 +1,6 @@
 {
     "generalInformation": {
-        "modelName": "PythonModel"
+        "modelName": "SingleSimulation"
     },
     "eulerianData": {
         "createPartInformation": {
