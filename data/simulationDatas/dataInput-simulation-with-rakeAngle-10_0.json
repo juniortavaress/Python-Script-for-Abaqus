@@ -1,6 +1,6 @@
 {
     "generalInformation": {
-        "modelName": "PythonModel"
+        "modelName": "dataInput-simulation-with-rakeAngle-10_0"
     },
     "eulerianData": {
         "createPartInformation": {
@@ -47,7 +47,7 @@
             "Name": "Tool",
             "Trickness": 0.02,
             "clearanceAngle": 3.0,
-            "rakeAngle": 12.0,
+            "rakeAngle": 10.0,
             "clearanceFaceDimension": 3.35,
             "rakeFaceDimension": 3.35,
             "Radius": 0.08
@@ -81,6 +81,6 @@
         }
     },
     "paths": {
-        "path_to_odb_file": "C:/Users/adam-ua769pu3t3n7k4o/Documents/Others/ODBFiles"
+        "pathOutputFiles": "C:/Users/adam-ua769pu3t3n7k4o/Music"
     }
 }

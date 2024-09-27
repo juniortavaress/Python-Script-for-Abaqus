@@ -1,6 +1,6 @@
 {
     "generalInformation": {
-        "modelName": "PythonModel"
+        "modelName": "dataInput-simulation-with-rakeAngle-12_0"
     },
     "eulerianData": {
         "createPartInformation": {
@@ -81,6 +81,6 @@
         }
     },
     "paths": {
-        "path_to_odb_file": "C:/Users/adam-ua769pu3t3n7k4o/Documents/Others/ODBFiles"
+        "pathOutputFiles": "C:/Users/adam-ua769pu3t3n7k4o/Music"
     }
 }
