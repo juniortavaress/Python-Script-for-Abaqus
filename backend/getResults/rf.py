@@ -14,6 +14,8 @@ def load_odb_file():
     with open(data_directory, 'r') as json_file:
         data = json.load(json_file)
         path_to_odb_files = data['paths']['path_to_odb_file']
+    
+    # path_to_odb_files = "S:\Junior\Severin_Datas_Abaqus\Scripts_Orthogonal_cutting"
     return path_to_odb_files
 
 # Function to extract reaction force data from the history output
@@ -76,6 +78,7 @@ def main():
     path_to_odb_files = load_odb_file()
     # Loop through each file in the directory to process ODB files
     for file_name in os.listdir(path_to_odb_files):
+        print(file_name)
         if file_name.endswith('.odb'):  
             odb_path = str(os.path.join(path_to_odb_files, file_name))  
             odb = openOdb(odb_path)

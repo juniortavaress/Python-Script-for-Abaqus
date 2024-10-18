@@ -25,7 +25,7 @@ class WorkerThread(QObject):
     # Generates INP files by running an Abaqus command
     def generate_inp_files(self):
         try:
-            abaqus_command = r'abaqus cae noGUI=S:/Junior/Abaqus+Python/PythonScriptforAbaqus/backend/geometryAndAssembly/main.py'
+            abaqus_command = rf'abaqus cae noGUI={self.main.main_path}/backend/geometryAndAssembly/main.py'
             result = subprocess.run(abaqus_command, shell=True, check=True)
             return 'INP files were successful generated (managerThread.py)'
         except Exception as e:
