@@ -50,7 +50,7 @@
             "rakeAngle": 12.0,
             "clearanceFaceDimension": 3.35,
             "rakeFaceDimension": 3.35,
-            "Radius": 0.02
+            "Radius": 0.08
         },
         "createPartitionInformation": {
             "partition01": 1.5,

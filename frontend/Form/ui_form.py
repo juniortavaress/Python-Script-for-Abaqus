@@ -5331,8 +5331,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.pages.setCurrentIndex(0)
-        self.tabWidget.setCurrentIndex(1)
+        self.pages.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -5532,7 +5532,7 @@ class Ui_MainWindow(object):
         self.fromTool.setText("")
         self.fromTool.setPlaceholderText(QCoreApplication.translate("MainWindow", u"value", None))
         self.label_60.setText(QCoreApplication.translate("MainWindow", u"Others Informations", None))
-        self.label_174.setText(QCoreApplication.translate("MainWindow", u"Feed (mm):", None))
+        self.label_174.setText(QCoreApplication.translate("MainWindow", u"Depth of cut (mm):", None))
         self.feed.setText("")
         self.feed.setPlaceholderText(QCoreApplication.translate("MainWindow", u"value", None))
         self.label_61.setText(QCoreApplication.translate("MainWindow", u"Time Period:", None))
